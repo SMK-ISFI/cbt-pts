@@ -4,7 +4,7 @@ class FakeDate extends Date { constructor(...args){super(...(args.length?args:[c
 const sheets=new Map();
 class Sheet {
  constructor(){this.rows=[];}
- appendRow(r){this.rows.push(r);}
+ appendRow(r){this.rows.push([...r]);}
  getLastRow(){return this.rows.length;} getDataRange(){return {getValues:()=>this.rows,getDisplayValues:()=>this.rows.map(r=>r.map(String))};}
  setFrozenRows(){} getRange(){return {setFontWeight(){return this;},setBackground(){return this;},setFontColor(){return this;}};}
 }
@@ -25,8 +25,10 @@ test('retry start idempotent dan peserta tidak dapat membuat sesi kedua',()=>{
  assert.equal(sheets.get('Sesi').rows.length,2);
  assert.equal(api({action:'start',examId:'php-sdlc-25-v3',studentId:'S001',attemptId:attemptId+'2'}).ok,false);
 });
-test('server menolak token salah dan submit dini',()=>{
- assert.equal(api({action:'submit',attemptId,token:'wrong',answers:{}}).ok,false);
+test('token salah tidak dinilai; submit sah terlalu dini ditolak',()=>{
+ const bad=api({action:'submit',attemptId,token:'wrong',answers:{}});
+ assert.equal(bad.receipt.status,'needs_review');
+ assert.equal(sheets.get('Nilai').rows.length,1);
  assert.equal(api({action:'submit',attemptId,token:session.token,answers:{q01:'C'}}).ok,false);
 });
 test('server menghitung nilai sendiri dan retry tidak menggandakan baris',()=>{
@@ -42,4 +44,37 @@ test('hasil yang terlambat karena offline tetap diterima dan ditandai',()=>{
  clock=second.deadline+120000;
  const saved=api({action:'submit',attemptId:attemptId+'3',token:second.token,answers:{q01:'C'},reason:'timeout',finishedAt:second.deadline});
  assert.equal(saved.ok,true);assert.equal(sheets.get('Nilai').rows[2][15],'YA');
+});
+
+test('baris Sesi terhapus: pulih dari cadangan dan dinilai tepat satu kali',()=>{
+ const id='recovery-attempt-000000000001';
+ const started=api({action:'start',examId:'php-sdlc-25-v3',studentId:'S003',attemptId:id});assert.equal(started.ok,true);
+ assert.ok(sheets.get('CadanganSesi').rows.find(r=>r[0]===id));
+ sheets.get('Sesi').rows=sheets.get('Sesi').rows.filter(r=>r[0]!==id);
+ clock=started.deadline-600000;
+ const request={action:'submit',attemptId:id,token:started.token,answers:{q01:'B'},finishedAt:clock,reason:'manual'};
+ const result=api(request);assert.equal(result.ok,true);assert.equal(result.result.score,4);
+ assert.ok(sheets.get('Sesi').rows.find(r=>r[0]===id));
+ assert.equal(api(request).result.score,4);
+ assert.equal(sheets.get('Nilai').rows.filter(r=>r[0]===id).length,1);
+});
+test('sesi dan cadangan hilang: jawaban lama diterima tanpa penilaian palsu',()=>{
+ const id='legacy-attempt-0000000000001';
+ const started=api({action:'start',examId:'php-sdlc-25-v3',studentId:'S004',attemptId:id});
+ sheets.get('Sesi').rows=sheets.get('Sesi').rows.filter(r=>r[0]!==id);
+ sheets.get('CadanganSesi').rows=sheets.get('CadanganSesi').rows.filter(r=>r[0]!==id);
+ const resume=api({action:'resume',attemptId:id,token:started.token});assert.equal(resume.needsReview,true);
+ const request={action:'submit',attemptId:id,token:started.token,answers:{q01:'B'},recovery:{examId:'php-sdlc-25-v3',student:{id:'S004',name:'Nama siswa',className:'XI PPLG 1'},questions:[{id:'q01',answer:'B'}]}};
+ const result=api(request);assert.equal(result.ok,true);assert.equal(result.receipt.status,'needs_review');assert.equal(result.result,undefined);
+ assert.equal(api(request).receipt.status,'needs_review');
+ const rows=sheets.get('PerluVerifikasi').rows.filter(r=>r[0]===id);assert.equal(rows.length,1);assert.equal(JSON.parse(rows[0][7]).q01,'B');
+ assert.equal(sheets.get('Nilai').rows.filter(r=>r[0]===id).length,0);
+});
+test('token sesi berubah di tab utama: cadangan asli tetap dapat dipakai',()=>{
+ const id='changed-token-attempt-000001';
+ const started=api({action:'start',examId:'php-sdlc-25-v3',studentId:'S005',attemptId:id});
+ const row=sheets.get('Sesi').rows.find(r=>r[0]===id);row[3]='edited-token';
+ clock=started.deadline;
+ const result=api({action:'submit',attemptId:id,token:started.token,answers:{q01:'B'},reason:'timeout'});
+ assert.equal(result.ok,true);assert.equal(result.result.score,4);
 });

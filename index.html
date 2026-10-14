@@ -164,14 +164,15 @@
   function renderResult() {
     page('result'); $('result-name').textContent=`${state.student.name} · ${state.exam.title}`;
     $('retry').hidden=state.status!=='pending'||sending; $('another').hidden=state.status!=='sent';
-    $('send-status').textContent=state.status==='sent'?`Jawaban ujian berhasil dikirim. ID: ${state.attemptId}`:(sending?'Mengirim jawaban… Tunggu konfirmasi penyimpanan.':'Jawaban sudah dikunci dan menunggu pengiriman. Jangan hapus data browser.');
+    $('send-status').textContent=state.status==='sent'?(state.deliveryStatus==='needs_review'?`Jawaban telah diterima untuk pemeriksaan guru. ID: ${state.attemptId}`:`Jawaban ujian berhasil dikirim. ID: ${state.attemptId}`):(sending?'Mengirim jawaban… Tunggu konfirmasi penyimpanan.':'Jawaban sudah dikunci dan menunggu pengiriman. Jangan hapus data browser.');
     if(!storageOK)$('send-status').textContent+=' Penyimpanan browser gagal; segera unduh bukti jawaban.';
   }
   async function send() {
     if(sending||state?.status!=='pending')return;
     sending=true;renderResult();
     try {
-      await api('submit',{attemptId:state.attemptId,token:state.token,answers:state.answers,reason:state.reason,finishedAt:state.finishedAt});
+      const response=await api('submit',{attemptId:state.attemptId,token:state.token,answers:state.answers,reason:state.reason,finishedAt:state.finishedAt,recovery:{examId:state.exam.id,student:state.student,startedAt:state.startedAt,deadline:state.deadline,questions:state.questions.map(({answer,explanation,...q})=>q)}});
+      state.deliveryStatus=response.receipt?.status||'recorded';
       state.result={recorded:true};state.status='sent';persist();notice('');
     }catch(e){notice(`Belum berhasil mengirim: ${e.message} Jawaban tetap tersimpan selama penyimpanan browser tersedia. Klik Coba kirim lagi atau tunggu koneksi pulih.`);}
     finally{sending=false;renderResult();}
@@ -188,7 +189,7 @@
       if(state?.result){state.result={recorded:true};persist();}
       if(state && !['starting','active','pending','sent'].includes(state.status))throw new Error('Data sesi tidak valid. Hubungi guru sebelum menghapus data browser.');
       offset=state?.offset||0;
-      if(state?.status==='active'){renderExam();tick();if(state.status==='active')api('resume',{attemptId:state.attemptId,token:state.token}).then(data=>{if(state.status!=='active')return;state.offset=offset;state.deadline=data.deadline;if(data.result){state.result={recorded:true};state.status='sent';persist();renderResult();}else{persist();tick();}}).catch(()=>notice('Sesi dipulihkan dari perangkat. Sinkronisasi server belum tersedia; waktu tetap berjalan.'));return;}
+      if(state?.status==='active'){renderExam();tick();if(state.status==='active')api('resume',{attemptId:state.attemptId,token:state.token}).then(data=>{if(state.status!=='active')return;state.offset=offset;if(Number.isFinite(data.deadline))state.deadline=data.deadline;if(data.result){state.result={recorded:true};state.status='sent';persist();renderResult();}else{persist();tick();}}).catch(()=>notice('Sesi dipulihkan dari perangkat. Sinkronisasi server belum tersedia; waktu tetap berjalan.'));return;}
       if(state?.status==='pending'||state?.status==='sent'){renderResult();if(state.status==='pending')send();return;}
       bank=await api('bootstrap');renderHome();
     }catch(e){page('loading');$('loading').textContent='Ruang ujian belum dapat dibuka. Periksa pengaturan, lalu muat ulang halaman.';notice(e.message || 'Gagal memuat data. Periksa koneksi internet dan pengaturan browser, lalu buka ulang index.html.');}

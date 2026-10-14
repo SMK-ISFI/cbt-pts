@@ -1,0 +1,64 @@
+PERBAIKAN SESI SAAT PENGIRIMAN
+=============================
+
+PASANG PADA APLIKASI YANG SUDAH BERJALAN
+1. Di komputer siswa, jangan hapus localStorage. Unduh bukti jawaban
+   terlebih dahulu jika ada hasil yang belum terkirim.
+2. Ganti index.html dengan versi baru di lokasi file yang sama.
+   PERTAHANKAN config.js yang sudah berisi URL API dan storageKey Anda.
+3. Buka Apps Script proyek yang sama. Catat questionFileId lama.
+   Ganti isi Code.gs dengan guru/Code.gs terbaru dari paket.
+   Isi kembali questionFileId dengan ID JSON yang sama.
+4. Simpan, jalankan setup satu kali dari editor. Script menambah
+   CadanganSesi dan PerluVerifikasi. Data Sesi/Nilai/Peserta lama tidak
+   dihapus. Sesi lama yang masih utuh disalin ke cadangan.
+5. Deploy > Manage deployments > pilih deployment saat ini > Edit
+   > New version > Deploy. Pertahankan URL /exec yang sama.
+   Execute as: Me; akses: Anyone. Jangan mengganti spreadsheet tujuan.
+6. Muat ulang halaman siswa. Kiriman yang pending akan dicoba otomatis,
+   atau klik Coba kirim lagi. Siswa tidak perlu mengerjakan ulang.
+
+PERILAKU BARU
+- Setiap sesi baru memiliki cadangan server di tab CadanganSesi.
+- Jika baris Sesi hilang, server menggunakan cadangan asli dan memulihkan
+  baris tersebut. Nilai dihitung seperti biasa di tab Nilai.
+- Jika token Sesi berubah tetapi token cocok dengan cadangan asli,
+  pengiriman tetap diproses menggunakan catatan cadangan.
+- Bila sesi tidak bisa diverifikasi sama sekali, jawaban diterima di tab
+  PerluVerifikasi. Siswa melihat "Jawaban telah diterima untuk pemeriksaan
+  guru", tanpa pesan merah tentang sesi yang hilang.
+- Nilai untuk kiriman PerluVerifikasi TIDAK dihitung/dimasukkan otomatis
+  ke Nilai. Ini diperlukan karena identitas, waktu, dan soal yang dikirim
+  browser belum dapat diverifikasi dengan sesi asli.
+- Pengiriman ulang dengan Attempt ID dan token yang sama tidak membuat
+  baris pemeriksaan ganda. Pengiriman sah tidak membuat nilai ganda.
+- Konfirmasi hanya diberikan setelah server berhasil menyimpan data.
+  Gangguan jaringan/izin Sheets tetap ditampilkan dengan pilihan retry.
+- Nilai dan rekap benar/salah tetap tidak ditampilkan kepada siswa.
+
+UNTUK GURU: TAB PERLUVERIFIKASI
+1. Cari baris berstatus PERLU VERIFIKASI.
+2. Cocokkan identitas dengan siswa/pengawas dan bukti jawaban yang dimiliki.
+3. Jika tersedia, periksa cadangan/riwayat sesi asli dan bank soal yang
+   berlaku saat siswa mengerjakan. Data berlabel "klaim" berasal dari
+   browser dan tidak menjadi bukti identitas/waktu yang terverifikasi.
+4. Jawaban JSON berisi pilihan per ID soal. Bukti klien JSON membantu
+   membandingkan urutan/teks soal; jangan menganggapnya sebagai kunci resmi.
+5. Guru memeriksa dan merekap nilai secara manual berdasarkan kunci resmi.
+   Sebelum menambahkan nilai, cari Attempt ID di Nilai untuk menghindari
+   duplikasi dengan hasil yang ternyata sudah masuk sebelumnya.
+6. Tandai Status menjadi SUDAH DIPERIKSA dan isi Catatan guru setelah selesai.
+
+Catatan penting: cadangan baru tidak dapat mengembalikan secara otomatis
+catatan yang sudah hilang sebelum pembaruan. Kiriman lama tersebut masuk
+PerluVerifikasi. Perubahan file tidak bisa memulihkan jawaban browser yang
+sudah dihapus. Jangan bagikan tab Sesi, CadanganSesi, atau PerluVerifikasi
+kepada siswa karena berisi data pribadi/token dan kunci pada snapshot.
+
+UJI
+Delapan pengujian simulasi lulus: akses kunci, retry mulai, penolakan nilai
+untuk token salah, batas submit dini, nilai dan retry idempotent, kiriman
+terlambat, pemulihan sesi terhapus, antrean verifikasi, dan token berubah
+(dikelompokkan menjadi delapan skenario pengujian).
+Pengujian di browser dan spreadsheet Google asli belum dilakukan; coba
+satu peserta uji sebelum digunakan kembali di kelas.

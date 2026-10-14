@@ -1,11 +1,10 @@
 CBT PHP & SDLC — GOOGLE SHEETS
 
 MEMPERBARUI APLIKASI YANG SUDAH TERPASANG
-1. Ganti HANYA index.html di folder aplikasi yang sama.
-2. Pertahankan config.js milik Anda agar URL dan sesi tetap sama.
-3. Soal.json, Apps Script, dan folder assets tidak perlu diganti.
-4. Muat ulang halaman (Ctrl+F5 jika menggunakan Live Server).
-Tidak perlu deploy ulang Apps Script untuk perubahan tampilan ini.
+Pembaruan pengiriman ini mengubah index.html DAN guru/Code.gs.
+Ikuti PERBAIKAN-PENGIRIMAN.txt. Pertahankan config.js, URL /exec,
+questionFileId, dan soal.json yang sudah digunakan. Deploy versi baru
+pada deployment yang sama, bukan membuat URL baru.
 
 APLIKASI
 Aplikasi selalu memakai Google Sheets. Tidak ada jalur ujian lokal.

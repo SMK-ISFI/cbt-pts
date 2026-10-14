@@ -3,7 +3,9 @@ const SETTINGS = {
   questionFileId: "TEMPEL_ID_FILE_SOAL_JSON",
   // ID spreadsheet disimpan otomatis oleh fungsi setup.
   attemptsSheet: 'Sesi',
-  resultsSheet: 'Nilai'
+  resultsSheet: 'Nilai',
+  backupSheet: 'CadanganSesi',
+  recoverySheet: 'PerluVerifikasi'
 };
 function setup() {
   const BANK = readBank_();
@@ -14,6 +16,8 @@ function setup() {
   if(roster.getLastRow()===1)BANK.students.forEach(s=>roster.appendRow([s.id,s.name,s.className]));
   table_(ss,SETTINGS.attemptsSheet,['Attempt ID','Exam ID','Student ID','Token','Mulai (ms)','Deadline (ms)','Snapshot JSON']);
   table_(ss,SETTINGS.resultsSheet,['Attempt ID','Exam ID','Student ID','Nama','Kelas','Mulai','Selesai klien','Diterima server','Alasan','Benar','Salah','Kosong','Jumlah soal','Nilai','Jawaban JSON','Terlambat diterima']);
+  const backup=backupSheet_(ss);recoverySheet_(ss);
+  ss.getSheetByName(SETTINGS.attemptsSheet).getDataRange().getValues().slice(1).forEach(row=>{if(validSession_(row))backupSession_(backup,row);});
 }
 function table_(ss,name,headers){let sh=ss.getSheetByName(name);if(!sh){sh=ss.insertSheet(name);sh.appendRow(headers);sh.setFrozenRows(1);sh.getRange(1,1,1,headers.length).setFontWeight('bold').setBackground('#245a49').setFontColor('#ffffff');}return sh;}
 function doGet(){return json_({ok:true,message:'CBT API aktif. Gunakan POST dari aplikasi CBT.'});}
@@ -23,11 +27,16 @@ function doPost(e){
     const p=JSON.parse(e.postData.contents);
     if(p.action==='bootstrap'){const BANK=readBank_();return json_({ok:true,exam:BANK.exam,students:students_(),questionCount:BANK.questions.length,serverNow:Date.now()});}
     lock.waitLock(20000);
-    const ss=spreadsheet_(), attempts=ss.getSheetByName(SETTINGS.attemptsSheet), results=ss.getSheetByName(SETTINGS.resultsSheet);
+    const ss=spreadsheet_(), attempts=table_(ss,SETTINGS.attemptsSheet,sessionHeaders_()), results=ss.getSheetByName(SETTINGS.resultsSheet);
+    const backup=backupSheet_(ss);
     if(!attempts||!results)throw new Error('Guru perlu menjalankan fungsi setup terlebih dahulu.');
-    if(p.action==='start')return json_(start_(p,attempts));
-    const row=find_(attempts,p.attemptId);
-    if(!row||typeof p.token!=='string'||row[3]!==p.token)throw new Error('Sesi tidak ditemukan atau token tidak sesuai. Hubungi guru.');
+    if(p.action==='start')return json_(start_(p,attempts,backup));
+    const row=resolveSession_(attempts,backup,p.attemptId,p.token);
+    if(!row){
+      if(p.action==='submit')return json_(receiveForReview_(ss,p));
+      if(p.action==='resume')return json_({ok:true,needsReview:true,serverNow:Date.now()});
+      throw new Error('Aksi tidak dikenal.');
+    }
     const previous=find_(results,p.attemptId);
     if(p.action==='resume')return json_({ok:true,deadline:Number(row[5]),serverNow:Date.now(),result:previous?result_(previous):null});
     if(p.action!=='submit')throw new Error('Aksi tidak dikenal.');
@@ -47,19 +56,19 @@ function doPost(e){
   }catch(error){return json_({ok:false,error:String(error.message||error)});}
   finally{if(lock.hasLock())lock.releaseLock();}
 }
-function start_(p,sh){
+function start_(p,sh,backup){
   const BANK=readBank_();
   if(typeof p.attemptId!=='string'||!/^[a-zA-Z0-9-]{20,60}$/.test(p.attemptId))throw new Error('ID sesi tidak valid.');
   if(p.examId!==BANK.exam.id)throw new Error('Konfigurasi ujian berubah. Muat ulang halaman.');
   const student=students_().find(s=>s.id===p.studentId);if(!student)throw new Error('Peserta tidak terdaftar.');
-  const old=find_(sh,p.attemptId);
-  if(old){if(old[1]!==BANK.exam.id||old[2]!==student.id)throw new Error('ID sesi sudah dipakai.');return session_(old);}
-  const rows=sh.getDataRange().getValues().slice(1);
+  const old=find_(backup,p.attemptId)||find_(sh,p.attemptId);
+  if(old){if(!validSession_(old)||old[1]!==BANK.exam.id||old[2]!==student.id)throw new Error('ID sesi sudah dipakai atau catatannya rusak.');backupSession_(backup,old);if(!find_(sh,p.attemptId))sh.appendRow(old);return session_(old);}
+  const rows=sh.getDataRange().getValues().slice(1).concat(backup.getDataRange().getValues().slice(1));
   if(rows.some(r=>r[1]===BANK.exam.id&&r[2]===student.id))throw new Error('Nama ini sudah memiliki sesi ujian. Gunakan browser asal atau minta guru memulihkan sesi.');
   const start=Date.now(), snapshot={exam:BANK.exam,student,questions:BANK.questions};
   const row=[p.attemptId,BANK.exam.id,student.id,Utilities.getUuid(),start,start+BANK.exam.durationMinutes*60000,JSON.stringify(snapshot)];
   if(row[6].length>45000)throw new Error('Bank soal terlalu besar untuk versi sederhana ini. Kurangi panjang/jumlah soal.');
-  sh.appendRow(row);SpreadsheetApp.flush();return session_(row);
+  backupSession_(backup,row);sh.appendRow(row);SpreadsheetApp.flush();return session_(row);
 }
 function session_(row){const s=JSON.parse(row[6]);return {ok:true,exam:s.exam,student:s.student,questions:s.questions.map(q=>{const {answer,explanation,...publicQuestion}=q;return publicQuestion;}),token:row[3],startedAt:Number(row[4]),deadline:Number(row[5]),serverNow:Date.now()};}
 function find_(sheet,id){if(typeof id!=='string')return null;const rows=sheet.getDataRange().getValues();for(let i=1;i<rows.length;i++)if(rows[i][0]===id)return rows[i];return null;}
@@ -94,4 +103,46 @@ function readBank_(){
   bank.questions.forEach(q=>{if(!q.id||typeof q.text!=='string'||!q.options||!Object.prototype.hasOwnProperty.call(q.options,q.answer))throw new Error('Soal atau kunci tidak valid: '+q.id);});
   if(!Array.isArray(bank.students))bank.students=[];
   return bank;
+}
+
+// Cadangan hanya berasal dari sesi server, bukan data yang diklaim browser.
+function sessionHeaders_(){return ['Attempt ID','Exam ID','Student ID','Token','Mulai (ms)','Deadline (ms)','Snapshot JSON'];}
+function backupSheet_(ss){return table_(ss,SETTINGS.backupSheet,sessionHeaders_());}
+function recoverySheet_(ss){return table_(ss,SETTINGS.recoverySheet,['Attempt ID','Token kiriman (privat)','Diterima server','Exam ID (klaim)','Student ID (klaim)','Nama (klaim)','Kelas (klaim)','Jawaban JSON','Bukti klien JSON','Penyebab','Status','Catatan guru']);}
+function validSession_(row){
+  if(!row||!row[0]||!row[3]||!Number.isFinite(Number(row[4]))||!Number.isFinite(Number(row[5])))return false;
+  try{const s=JSON.parse(row[6]);return !!(s.exam&&s.student&&Array.isArray(s.questions)&&s.questions.length&&s.questions.every(q=>q.options&&Object.prototype.hasOwnProperty.call(q.options,q.answer)));}catch(e){return false;}
+}
+function backupSession_(sheet,row){if(!find_(sheet,row[0]))sheet.appendRow(row);}
+function resolveSession_(primary,backup,id,token){
+  if(typeof token!=='string'||!token)return null;
+  // Cadangan asli diutamakan jika tab Sesi telah diedit tanpa sengaja.
+  const saved=find_(backup,id), current=find_(primary,id);
+  if(validSession_(saved)){
+    if(saved[3]!==token)return null;
+    if(!current)primary.appendRow(saved);
+    return saved;
+  }
+  if(validSession_(current)&&current[3]===token){backupSession_(backup,current);return current;}
+  return null;
+}
+function receiveForReview_(ss,p){
+  if(typeof p.attemptId!=='string'||!/^[a-zA-Z0-9-]{20,60}$/.test(p.attemptId))throw new Error('ID kiriman tidak valid. Simpan bukti jawaban dan hubungi guru.');
+  if(typeof p.token!=='string'||!p.token||p.token.length>200)throw new Error('Identitas kiriman tidak lengkap. Simpan bukti jawaban dan hubungi guru.');
+  if(!p.answers||typeof p.answers!=='object'||Array.isArray(p.answers))throw new Error('Format jawaban tidak valid.');
+  const clean={};Object.keys(p.answers).forEach(id=>{
+    const value=p.answers[id];
+    if(!/^[a-zA-Z0-9_-]{1,100}$/.test(id)||typeof value!=='string'||value.length>20)throw new Error('Format pilihan tidak valid.');
+    Object.defineProperty(clean,id,{value,enumerable:true});
+  });
+  const answers=JSON.stringify(clean), evidence=JSON.stringify(p.recovery||{});
+  if(answers.length>40000||evidence.length>40000)throw new Error('Bukti terlalu besar. Unduh bukti jawaban untuk guru.');
+  const sheet=recoverySheet_(ss), rows=sheet.getDataRange().getValues().slice(1);
+  if(!rows.some(r=>r[0]===p.attemptId&&r[1]===p.token)){
+    const info=p.recovery||{}, student=info.student||{};
+    // Tidak dinilai otomatis: identitas, waktu, dan soal dari klien belum terverifikasi.
+    sheet.appendRow([p.attemptId,p.token,new Date(),safe_(String(info.examId||'').slice(0,100)),safe_(String(student.id||'').slice(0,100)),safe_(String(student.name||'').slice(0,200)),safe_(String(student.className||'').slice(0,100)),answers,evidence,'Sesi asli tidak dapat diverifikasi','PERLU VERIFIKASI','']);
+    SpreadsheetApp.flush();
+  }
+  return {ok:true,receipt:{status:'needs_review',attemptId:p.attemptId},serverNow:Date.now()};
 }
