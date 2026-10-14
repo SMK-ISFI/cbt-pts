@@ -1,0 +1,17 @@
+PEMBARUAN TAMPILAN AKHIR
+
+Untuk aplikasi yang sudah terpasang:
+1. Cadangkan index.html lama.
+2. Ganti HANYA index.html dengan versi paket ini, di lokasi yang sama.
+3. Pertahankan config.js milik Anda, terutama URL Apps Script dan storageKey.
+4. Tidak perlu mengganti soal.json, Code.gs, atau deploy ulang Apps Script.
+5. Muat ulang halaman; jika memakai Live Server tekan Ctrl+F5.
+
+Halaman akhir hanya menampilkan ucapan selesai, identitas, dan status kirim.
+Nilai serta jumlah benar/salah/kosong tidak ditampilkan. Nilai tetap dicatat
+di Google Sheets oleh script yang sudah terpasang. Bukti unduhan tidak
+menyertakan hasil penilaian. Jawaban pilihan siswa tetap ada sebagai cadangan.
+
+Pembaruan ini menyembunyikan penilaian dari tampilan, penyimpanan frontend
+dan bukti unduhan. Respons API server yang lama masih memuat rekap nilai;
+pembaruan ini bukan pembatasan akses nilai pada tingkat server.

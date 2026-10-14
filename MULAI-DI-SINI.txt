@@ -1,0 +1,62 @@
+CBT PHP & SDLC — GOOGLE SHEETS
+
+MEMPERBARUI APLIKASI YANG SUDAH TERPASANG
+1. Ganti HANYA index.html di folder aplikasi yang sama.
+2. Pertahankan config.js milik Anda agar URL dan sesi tetap sama.
+3. Soal.json, Apps Script, dan folder assets tidak perlu diganti.
+4. Muat ulang halaman (Ctrl+F5 jika menggunakan Live Server).
+Tidak perlu deploy ulang Apps Script untuk perubahan tampilan ini.
+
+APLIKASI
+Aplikasi selalu memakai Google Sheets. Tidak ada jalur ujian lokal.
+Jika apiUrl belum diisi/formatnya tidak benar, muncul petunjuk pengaturan.
+Jika server gagal diakses, aplikasi menampilkan error tanpa membuat sesi baru.
+Sesi online yang sudah tersimpan tetap dapat dilanjutkan ketika internet
+terputus; pengiriman akan dicoba ulang saat koneksi kembali.
+Halaman akhir tidak menampilkan nilai atau rekap benar/salah/kosong.
+
+PEMASANGAN PERTAMA
+1. Unggah guru/soal.json ke Google Drive akun guru. Biarkan privat.
+2. Salin ID dari URL file: /file/d/ID_FILE/view.
+3. Buat Google Sheets, buka Ekstensi > Apps Script.
+4. Tempel seluruh guru/Code.gs. Isi SETTINGS.questionFileId dengan ID tadi.
+5. Simpan, jalankan fungsi setup dari editor dan izinkan Sheets/Drive.
+6. Edit nama di tab Peserta: kolom ID, Nama, Kelas; ID harus unik.
+7. Deploy > New deployment > Web app. Execute as: Me; access: Anyone.
+8. Salin URL /exec ke apiUrl pada config.js.
+9. Buka index.html. Nama/soal dimuat otomatis; nilai masuk ke tab Nilai.
+
+Jika terjadi 403, cek akses deployment. URL /exec harus dapat menampilkan
+JSON ok:true di Incognito. Jika akses Drive ditolak, jalankan setup lagi
+dari editor dan berikan izin membaca Drive sebelum deploy versi baru.
+Jangan memakai no-cors karena status kirim tidak dapat diperiksa.
+
+SOAL DAN DURASI
+Semua soal, opsi, kunci, pembahasan, serta durasi ada di guru/soal.json.
+Tidak ada soal yang ditulis dalam HTML atau script. Jumlah awal 25 soal.
+Ubah exam.durationMinutes untuk durasi, finishWindowMinutes untuk batas
+aktif tombol Akhiri (awal 10 menit terakhir).
+Perbarui file JSON Drive dengan Kelola versi agar ID file tetap sama.
+Jika ID file berubah, ubah questionFileId dan deploy New version.
+Jangan mengubah bank ketika ujian berjalan. Sesi aktif memakai snapshot
+soal/durasi ketika mulai. Untuk ujian baru, gunakan exam.id baru.
+Daftar students di JSON hanya mengisi awal tab Peserta yang masih kosong.
+Selanjutnya daftar nama online mengikuti tab Peserta.
+
+BERKAS UNTUK SISWA
+Bagikan index.html, config.js, dan assets. Jangan bagikan guru/soal.json
+yang memuat kunci; jangan bagikan spreadsheet atau tab Sesi kepada siswa.
+
+PEMULIHAN DAN BATASAN
+Buka index.html di lokasi, browser, dan profil yang sama. Jangan menghapus
+localStorage, memindah file, atau mengubah URL API selama ujian. Uji pemulihan
+tutup-buka terlebih dahulu karena localStorage file:// bergantung browser.
+Waktu tetap berjalan saat browser tertutup. Jika deadline lewat ketika
+browser tertutup, proses akhir/kirim berjalan ketika halaman dibuka kembali.
+Gunakan satu tab. Simpan bukti jawaban jika pengiriman belum berhasil.
+Pemilihan nama bukan autentikasi. Jawaban lokal dapat dimanipulasi; kiriman
+terlambat diterima dan ditandai untuk mendukung gangguan koneksi.
+Nilai tidak ditampilkan di UI/bukti unduhan. Respons API lama masih memuat
+rekap nilai; fitur ini bukan pembatasan akses nilai di tingkat server.
+Pengujian browser dan integrasi spreadsheet nyata perlu dilakukan sesudah
+pemasangan. Pengujian kode/API menggunakan simulasi.

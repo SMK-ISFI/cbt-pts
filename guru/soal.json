@@ -1,0 +1,411 @@
+{
+  "exam": {
+    "id": "php-sdlc-25-v3",
+    "title": "PHP & Perancangan Sistem",
+    "subject": "Pengembangan Aplikasi Web • XI PPLG",
+    "durationMinutes": 60,
+    "finishWindowMinutes": 10
+  },
+  "students": [
+    {
+      "id": "S001",
+      "name": "Aditya Pratama",
+      "className": "XI PPLG 1"
+    },
+    {
+      "id": "S002",
+      "name": "Alya Putri",
+      "className": "XI PPLG 1"
+    },
+    {
+      "id": "S003",
+      "name": "Bima Saputra",
+      "className": "XI PPLG 1"
+    },
+    {
+      "id": "S004",
+      "name": "Citra Lestari",
+      "className": "XI PPLG 1"
+    },
+    {
+      "id": "S005",
+      "name": "Dimas Ramadhan",
+      "className": "XI PPLG 1"
+    },
+    {
+      "id": "S006",
+      "name": "Farah Nabila",
+      "className": "XI PPLG 1"
+    },
+    {
+      "id": "S007",
+      "name": "Gilang Maulana",
+      "className": "XI PPLG 1"
+    },
+    {
+      "id": "S008",
+      "name": "Intan Permata",
+      "className": "XI PPLG 1"
+    }
+  ],
+  "questions": [
+    {
+      "id": "q01",
+      "topic": "include dan require",
+      "text": "Halaman beranda, profil, dan kontak memakai menu navigasi yang sama. Apa manfaat memindahkan menu ke navbar.php lalu memanggilnya dengan include?",
+      "options": {
+        "A": "Menu hanya dapat tampil pada satu halaman",
+        "B": "Perubahan menu cukup dilakukan pada satu berkas",
+        "C": "PHP tidak lagi membutuhkan web server",
+        "D": "Semua data otomatis tersimpan ke database",
+        "E": "Setiap halaman otomatis memiliki session"
+      },
+      "answer": "B",
+      "explanation": "Menu yang dipakai bersama dapat dikelola dalam satu berkas sehingga tidak perlu mengubah salinannya di setiap halaman."
+    },
+    {
+      "id": "q02",
+      "topic": "include dan require",
+      "text": "Berkas pesan.php tersedia dan berisi kode berikut. Apa keluaran halaman index.php?",
+      "options": {
+        "A": "Halo Siswa",
+        "B": "Siswa Halo",
+        "C": "Halo Halo",
+        "D": "Siswa",
+        "E": "Tidak ada keluaran"
+      },
+      "answer": "A",
+      "explanation": "include menjalankan isi pesan.php, kemudian eksekusi dilanjutkan ke echo berikutnya.",
+      "code": "// pesan.php\n<?php echo \"Halo \"; ?>\n\n// index.php\n<?php\ninclude \"pesan.php\";\necho \"Siswa\";\n?>",
+      "language": "php"
+    },
+    {
+      "id": "q03",
+      "topic": "include dan require",
+      "text": "Dengan penanganan error bawaan PHP dan tanpa try-catch, apa perbedaan utama ketika berkas yang dipanggil tidak ditemukan?",
+      "options": {
+        "A": "include selalu menghentikan program, require selalu melanjutkan",
+        "B": "Keduanya membuat berkas baru secara otomatis",
+        "C": "Keduanya selalu mengabaikan kesalahan tanpa peringatan",
+        "D": "include memberi warning dan eksekusi dapat berlanjut; kegagalan require menghentikan eksekusi jika error tidak ditangani",
+        "E": "require hanya boleh memanggil berkas HTML"
+      },
+      "answer": "D",
+      "explanation": "include yang gagal memunculkan warning. Pada PHP 8, require yang gagal juga menghasilkan Error; jika tidak ditangani, eksekusi berhenti."
+    },
+    {
+      "id": "q04",
+      "topic": "include dan require",
+      "text": "File koneksi.php diperlukan agar halaman dapat mengakses database. Pengembang juga ingin mencegah berkas yang sama dimuat ulang. Pernyataan mana yang paling sesuai?",
+      "options": {
+        "A": "include \"koneksi.php\";",
+        "B": "echo \"koneksi.php\";",
+        "C": "require_once \"koneksi.php\";",
+        "D": "require \"koneksi.php\";",
+        "E": "readfile(\"koneksi.php\");"
+      },
+      "answer": "C",
+      "explanation": "require_once memuat berkas yang wajib tersedia dan mencegah pemuatan ulang berkas yang sama."
+    },
+    {
+      "id": "q05",
+      "topic": "GET dan POST",
+      "text": "Pengguna membuka alamat detail.php?id=note-12345678. Ekspresi PHP mana yang membaca nilai parameter id dari URL tersebut?",
+      "options": {
+        "A": "$_POST[\"id\"]",
+        "B": "$_SESSION[\"id\"]",
+        "C": "$_FILES[\"id\"]",
+        "D": "$_SERVER[\"id\"]",
+        "E": "$_GET[\"id\"]"
+      },
+      "answer": "E",
+      "explanation": "Parameter query pada URL dapat dibaca melalui $_GET."
+    },
+    {
+      "id": "q06",
+      "topic": "GET dan POST",
+      "text": "Form pencarian menggunakan method=\"get\" dan input name=\"keyword\". Pengguna mengetik PHP. Bentuk URL hasil pengiriman yang sesuai adalah …",
+      "options": {
+        "A": "cari.php?keyword=PHP",
+        "B": "cari.php/POST/PHP",
+        "C": "cari.php#keyword:PHP",
+        "D": "cari.php?name=keyword",
+        "E": "cari.php?method=get"
+      },
+      "answer": "A",
+      "explanation": "GET menempatkan pasangan nama input dan nilainya dalam query string."
+    },
+    {
+      "id": "q07",
+      "topic": "GET dan POST",
+      "text": "Form berikut dikirim ke simpan.php. Variabel mana yang digunakan untuk membaca judul?",
+      "options": {
+        "A": "$_GET[\"judul\"]",
+        "B": "$_POST[\"title\"]",
+        "C": "$_POST[\"judul\"]",
+        "D": "$_FILES[\"judul\"]",
+        "E": "$_SESSION[\"judul\"]"
+      },
+      "answer": "C",
+      "explanation": "Kunci input mengikuti atribut name, bukan id, dan metode form menentukan penggunaan $_POST.",
+      "code": "<form action=\"simpan.php\" method=\"post\">\n  <input type=\"text\" id=\"title\" name=\"judul\">\n  <button type=\"submit\">Simpan</button>\n</form>",
+      "language": "html"
+    },
+    {
+      "id": "q08",
+      "topic": "GET dan POST",
+      "text": "Form login menggunakan POST. Pernyataan mana yang benar mengenai keamanan data yang dikirim?",
+      "options": {
+        "A": "POST otomatis mengenkripsi semua data",
+        "B": "POST tidak menaruh data form di query URL, tetapi HTTPS tetap diperlukan untuk enkripsi saat transmisi",
+        "C": "POST membuat validasi server tidak diperlukan",
+        "D": "POST membuat password aman disimpan sebagai teks biasa",
+        "E": "POST mencegah semua serangan aplikasi web"
+      },
+      "answer": "B",
+      "explanation": "POST menentukan cara pengiriman data, bukan enkripsi. HTTPS dan pengolahan password yang benar tetap diperlukan."
+    },
+    {
+      "id": "q09",
+      "topic": "GET dan POST",
+      "text": "Halaman tambah.php seharusnya memproses data hanya ketika menerima form POST. Kondisi mana yang sesuai?",
+      "options": {
+        "A": "$_GET[\"method\"] === \"POST\"",
+        "B": "$_POST === \"POST\"",
+        "C": "$_SERVER[\"REQUEST_METHOD\"] === \"GET\"",
+        "D": "$_SERVER[\"REQUEST_METHOD\"] === \"POST\"",
+        "E": "$_SESSION[\"REQUEST_METHOD\"] === \"POST\""
+      },
+      "answer": "D",
+      "explanation": "REQUEST_METHOD pada $_SERVER menunjukkan metode HTTP permintaan saat ini."
+    },
+    {
+      "id": "q10",
+      "topic": "CRUD PHP",
+      "text": "Pada aplikasi notes, pengguna mengisi judul dan isi catatan baru kemudian menekan Simpan. Operasi CRUD apakah yang terjadi?",
+      "options": {
+        "A": "Read",
+        "B": "Update",
+        "C": "Delete",
+        "D": "Search",
+        "E": "Create"
+      },
+      "answer": "E",
+      "explanation": "Create menambahkan data baru ke penyimpanan."
+    },
+    {
+      "id": "q11",
+      "topic": "CRUD PHP",
+      "text": "Pengembang ingin menampilkan semua catatan dari yang paling baru. Query mana yang sesuai?",
+      "options": {
+        "A": "SELECT * FROM notes ORDER BY createdAt DESC",
+        "B": "SELECT * FROM notes ORDER BY createdAt ASC",
+        "C": "DELETE FROM notes ORDER BY createdAt DESC",
+        "D": "UPDATE notes SET createdAt = DESC",
+        "E": "INSERT INTO notes ORDER BY createdAt DESC"
+      },
+      "answer": "A",
+      "explanation": "SELECT membaca data; DESC pada createdAt mengurutkan waktu dari yang terbaru."
+    },
+    {
+      "id": "q12",
+      "topic": "CRUD PHP",
+      "text": "Guru meminta judul catatan dengan id note-12345678 diperbaiki tanpa mengubah catatan lain. Query mana yang sesuai?",
+      "options": {
+        "A": "UPDATE notes SET title = 'Jadwal Baru'",
+        "B": "DELETE FROM notes WHERE id = 'note-12345678'",
+        "C": "UPDATE notes SET title = 'Jadwal Baru' WHERE id = 'note-12345678'",
+        "D": "INSERT INTO notes (title) VALUES ('Jadwal Baru')",
+        "E": "SELECT title FROM notes WHERE id = 'note-12345678'"
+      },
+      "answer": "C",
+      "explanation": "UPDATE mengubah data, sedangkan WHERE membatasi baris yang diubah. Contoh ini menggunakan nilai tetap untuk menunjukkan fungsi WHERE."
+    },
+    {
+      "id": "q13",
+      "topic": "CRUD PHP",
+      "text": "Apa akibat query berikut jika berhasil dijalankan?",
+      "options": {
+        "A": "Hanya satu catatan dengan id terkecil yang terhapus",
+        "B": "Semua baris dalam tabel notes terhapus, tetapi struktur tabel tetap ada",
+        "C": "Tabel notes beserta strukturnya hilang",
+        "D": "Hanya catatan kosong yang terhapus",
+        "E": "Tidak ada perubahan karena WHERE wajib secara sintaks"
+      },
+      "answer": "B",
+      "explanation": "DELETE tanpa WHERE menghapus seluruh baris. DROP TABLE yang menghapus struktur tabel.",
+      "code": "DELETE FROM notes;",
+      "language": "sql"
+    },
+    {
+      "id": "q14",
+      "topic": "CRUD PHP",
+      "text": "Kode berikut digunakan pada halaman daftar catatan. Apa fungsi mysqli_fetch_assoc pada perulangan tersebut?",
+      "options": {
+        "A": "Menghapus seluruh catatan dari database",
+        "B": "Menambah satu catatan baru",
+        "C": "Mengubah nama kolom pada tabel",
+        "D": "Mengambil satu baris hasil query sebagai array asosiatif",
+        "E": "Membuka koneksi baru ke database"
+      },
+      "answer": "D",
+      "explanation": "mysqli_fetch_assoc mengambil baris berikutnya dari hasil query dalam bentuk array asosiatif. Nilai kolom dapat dibaca menggunakan nama kolom sebagai kunci.",
+      "code": "$hasil = mysqli_query($koneksi, \"SELECT title FROM notes\");\nwhile ($note = mysqli_fetch_assoc($hasil)) {\n    echo htmlspecialchars($note[\"title\"], ENT_QUOTES, \"UTF-8\");\n}",
+      "language": "php"
+    },
+    {
+      "id": "q15",
+      "topic": "CRUD PHP",
+      "text": "Judul catatan wajib diisi. Apa tindakan yang tepat pada proses PHP sebelum data disimpan?",
+      "options": {
+        "A": "Mengandalkan atribut required pada HTML saja",
+        "B": "Menghapus tabel jika judul kosong",
+        "C": "Mengabaikan nilai yang dikirim pengguna",
+        "D": "Mengubah metode POST menjadi GET",
+        "E": "Memeriksa judul di server setelah trim dan menolak nilai kosong"
+      },
+      "answer": "E",
+      "explanation": "Validasi tetap harus dilakukan di server. trim menghapus spasi di awal dan akhir, sehingga input yang hanya berisi spasi dapat ditolak."
+    },
+    {
+      "id": "q16",
+      "topic": "SDLC dan analisis",
+      "text": "Tim sekolah ingin membuat aplikasi peminjaman alat. Sebelum merancang layar, apa yang sebaiknya dilakukan pada tahap analisis?",
+      "options": {
+        "A": "Menggali proses peminjaman saat ini, masalah, dan kebutuhan pengguna",
+        "B": "Langsung memilih warna tombol",
+        "C": "Mengunggah aplikasi yang belum dibuat",
+        "D": "Menghapus semua formulir lama",
+        "E": "Membuat logo aplikasi sebagai satu-satunya hasil analisis"
+      },
+      "answer": "A",
+      "explanation": "Analisis dimulai dengan memahami masalah, proses, serta kebutuhan pihak yang menggunakan sistem."
+    },
+    {
+      "id": "q17",
+      "topic": "SDLC dan analisis",
+      "text": "Manakah contoh kebutuhan fungsional untuk aplikasi perpustakaan?",
+      "options": {
+        "A": "Halaman utama dimuat paling lama dua detik pada kondisi uji tertentu",
+        "B": "Sistem menyediakan fitur pencatatan pengembalian buku",
+        "C": "Tampilan nyaman dipakai pada layar ponsel",
+        "D": "Ketersediaan layanan ditargetkan 99% per bulan",
+        "E": "Ukuran berkas instalasi di bawah batas tertentu"
+      },
+      "answer": "B",
+      "explanation": "Kebutuhan fungsional menjelaskan kemampuan yang harus disediakan sistem, seperti mencatat pengembalian."
+    },
+    {
+      "id": "q18",
+      "topic": "SDLC dan analisis",
+      "text": "Dari pernyataan berikut, manakah kebutuhan nonfungsional yang dapat diuji dengan jelas?",
+      "options": {
+        "A": "Sistem menyediakan tombol tambah siswa",
+        "B": "Petugas dapat mengubah data buku",
+        "C": "Siswa dapat melihat status peminjaman",
+        "D": "Pada pengujian dengan 30 pengguna bersamaan, halaman daftar buku tampil paling lama tiga detik",
+        "E": "Admin dapat menonaktifkan akun"
+      },
+      "answer": "D",
+      "explanation": "Batas waktu respons dan jumlah pengguna menentukan kriteria kinerja yang dapat diuji."
+    },
+    {
+      "id": "q19",
+      "topic": "SDLC dan analisis",
+      "text": "Urutan kegiatan berikut yang paling masuk akal untuk menyusun rancangan awal aplikasi adalah …",
+      "options": {
+        "A": "Desain layar → hapus data → analisis → wawancara",
+        "B": "Pengujian akhir → publikasi → identifikasi masalah → desain",
+        "C": "Identifikasi masalah → pengumpulan dan analisis kebutuhan → perancangan sistem",
+        "D": "Implementasi seluruh fitur → baru menentukan pengguna",
+        "E": "Desain database → publikasi → baru mencari masalah"
+      },
+      "answer": "C",
+      "explanation": "Rancangan seharusnya berangkat dari masalah dan kebutuhan yang telah dipahami. Pada proses iteratif, tahap ini dapat ditinjau kembali."
+    },
+    {
+      "id": "q20",
+      "topic": "Use case diagram",
+      "text": "Dalam use case diagram aplikasi peminjaman alat sekolah, siapakah yang dapat digambarkan sebagai aktor?",
+      "options": {
+        "A": "Tombol Simpan",
+        "B": "Tabel peminjaman",
+        "C": "Kolom tanggal_pinjam",
+        "D": "Halaman dashboard",
+        "E": "Petugas yang berinteraksi dengan aplikasi untuk mencatat peminjaman"
+      },
+      "answer": "E",
+      "explanation": "Aktor adalah peran di luar batas sistem yang berinteraksi dengan sistem. Aktor juga dapat berupa sistem eksternal."
+    },
+    {
+      "id": "q21",
+      "topic": "Use case diagram",
+      "text": "Nama use case mana yang paling tepat untuk menggambarkan tujuan siswa dalam aplikasi perpustakaan?",
+      "options": {
+        "A": "Mengajukan peminjaman buku",
+        "B": "Tombol berwarna hijau",
+        "C": "Tabel buku",
+        "D": "Kolom id",
+        "E": "Halaman selebar 1024 piksel"
+      },
+      "answer": "A",
+      "explanation": "Nama use case menjelaskan tujuan atau layanan sistem dari sudut pandang aktor, biasanya berupa frasa kerja."
+    },
+    {
+      "id": "q22",
+      "topic": "Use case diagram",
+      "text": "Setiap kali use case Memproses Peminjaman dijalankan, sistem selalu menjalankan perilaku Memeriksa Kuota Pinjaman yang juga dipakai use case lain. Relasi yang paling sesuai adalah …",
+      "options": {
+        "A": "Association antara dua aktor",
+        "B": "<<include>> dari Memproses Peminjaman ke Memeriksa Kuota Pinjaman",
+        "C": "<<extend>> dari Memproses Peminjaman ke Memeriksa Kuota Pinjaman karena selalu wajib",
+        "D": "Generalisasi dari sistem ke tabel",
+        "E": "Tidak ada relasi karena kedua perilaku saling terkait"
+      },
+      "answer": "B",
+      "explanation": "Include digunakan ketika perilaku use case lain disertakan sebagai bagian yang diperlukan dari use case dasar; arah relasinya menuju use case yang disertakan."
+    },
+    {
+      "id": "q23",
+      "topic": "Activity diagram",
+      "text": "Dalam activity diagram, simbol apa yang lazim digunakan untuk menunjukkan titik percabangan berdasarkan suatu kondisi?",
+      "options": {
+        "A": "Persegi panjang biasa tanpa label",
+        "B": "Garis putus-putus",
+        "C": "Lingkaran ganda untuk setiap proses",
+        "D": "Belah ketupat dengan kondisi pada alur keluar",
+        "E": "Gambar tabel database"
+      },
+      "answer": "D",
+      "explanation": "Decision node digambarkan sebagai belah ketupat; guard seperti [valid] dan [tidak valid] ditulis pada alur keluar."
+    },
+    {
+      "id": "q24",
+      "topic": "Activity diagram",
+      "text": "Pada alur login, sistem memeriksa kecocokan akun. Jika data tidak cocok, aplikasi perlu menampilkan pesan gagal dan memberi kesempatan mencoba lagi. Alur mana yang sesuai?",
+      "options": {
+        "A": "Semua hasil pemeriksaan menuju dashboard",
+        "B": "Data tidak cocok → simpan sebagai akun baru → dashboard",
+        "C": "Data cocok → dashboard; data tidak cocok → pesan gagal → kembali ke pengisian login",
+        "D": "Data tidak cocok → hapus seluruh akun → selesai",
+        "E": "Data cocok → pesan gagal; data tidak cocok → dashboard"
+      },
+      "answer": "C",
+      "explanation": "Percabangan memisahkan alur berdasarkan hasil validasi. Jalur gagal kembali ke langkah input agar pengguna dapat mencoba lagi."
+    },
+    {
+      "id": "q25",
+      "topic": "Activity diagram",
+      "text": "Activity diagram peminjaman dibagi menjadi swimlane Siswa, Petugas, dan Sistem. Apa tujuan pembagian ini?",
+      "options": {
+        "A": "Menentukan warna antarmuka",
+        "B": "Menentukan tipe data seluruh kolom database",
+        "C": "Mengganti kebutuhan pengujian",
+        "D": "Menentukan urutan abjad nama pengguna",
+        "E": "Memperjelas siapa yang bertanggung jawab atas setiap aktivitas"
+      },
+      "answer": "E",
+      "explanation": "Swimlane mengelompokkan aktivitas menurut pelaku atau pihak yang bertanggung jawab, sehingga pembagian tugas terlihat."
+    }
+  ]
+}

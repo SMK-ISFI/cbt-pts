@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#245a49"><title>Ruang Ujian · CBT Kelas</title>
+  <link rel="stylesheet" href="assets/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/highlight.min.css">
+  <style>
+:root{--green:#245a49;--ink:#253b34;--muted:#738077;--paper:#f5f6f2;--line:#dfe5de;--bs-primary:#245a49}body{background:var(--paper);color:var(--ink);font-family:Inter,"Segoe UI",Arial,sans-serif;line-height:1.6}.container{max-width:1180px}.topbar{background:#fff;border-bottom:1px solid var(--line);padding:19px 0}.brand{display:flex;align-items:center;gap:10px;color:var(--ink);font-size:20px;font-weight:750;text-decoration:none;letter-spacing:-.6px}.brand-icon{background:var(--green);color:white;border-radius:10px;display:grid;place-items:center;width:37px;height:37px;font-family:Georgia,serif;font-size:30px;line-height:1}.brand-sub{border-left:1px solid var(--line);margin-left:12px;padding-left:18px;letter-spacing:1.5px;font-size:10px;color:var(--muted)}.eyebrow{font-size:11px;letter-spacing:1.8px;font-weight:750;color:var(--green)}.panel{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 5px 20px #243d3004}.intro h1{font-size:clamp(42px,5vw,66px);font-weight:750;letter-spacing:-2.8px;line-height:1.13;margin:22px 0}.intro h1 em{font-family:Georgia,serif;font-weight:400;color:var(--green)}.intro-copy{color:#6a786f;font-size:16px;margin-top:25px}.intro .d-flex b{display:block;font-size:28px}.intro .d-flex span{font-size:12px;color:var(--muted)}.intro-divider{width:1px;background:var(--line)}.entrance{padding:38px}.entrance h2{font-size:25px;font-weight:700;letter-spacing:-.6px}.form-select{border-color:var(--line);font-size:15px;padding:16px;border-radius:9px}.form-select:focus{border-color:var(--green);box-shadow:0 0 0 3px #245a4920}.rules{margin:25px 0;background:#f7f8f4;padding:18px;border-radius:10px;font-size:13px}.rules ul{padding-left:19px;margin:8px 0 0;color:#6a786f}.rules li+li{margin-top:7px}.btn{font-weight:600;border-radius:9px;padding:11px 17px;font-size:14px}.btn-primary{--bs-btn-bg:#245a49;--bs-btn-border-color:#245a49;--bs-btn-hover-bg:#194535;--bs-btn-hover-border-color:#194535;--bs-btn-active-bg:#173e31;--bs-btn-active-border-color:#173e31;--bs-btn-disabled-bg:#a9b4ad;--bs-btn-disabled-border-color:#a9b4ad}.btn-outline-secondary{--bs-btn-color:#5f6c65;--bs-btn-border-color:#dce2dc;--bs-btn-hover-bg:#edf2ec;--bs-btn-hover-color:#253b34;--bs-btn-hover-border-color:#bdcdbf}.btn-link{color:var(--green)}.btn:focus-visible,a:focus-visible{outline:3px solid #c59433;outline-offset:3px}.btn-sm{font-size:12px;padding:7px 10px}.btn-lg{padding:15px}.exam-heading{display:flex;justify-content:space-between;gap:20px;align-items:center}.timer-box{background:white;border:1px solid var(--line);border-radius:12px;padding:12px 25px;min-width:150px;text-align:center}.timer-box span{font-size:10px;letter-spacing:1.6px;display:block;color:var(--muted)}.timer-box b{font-size:30px;font-variant-numeric:tabular-nums;line-height:1.25}.timer-box.urgent{color:#af5135;background:#fff5ef;border-color:#eac6b2}.question-panel{padding:30px}.question-text{font-size:20px;font-weight:600;line-height:1.6;margin-bottom:24px;white-space:pre-wrap}.code-wrap{background:#0d1117;border-radius:10px;overflow:hidden;margin-bottom:25px}.code-label{color:#87949e;border-bottom:1px solid #29313c;padding:9px 17px;font-size:10px;letter-spacing:1px}.code-wrap pre{margin:0;padding:18px;tab-size:2}.code-wrap code{color:#dbe6f2;background:transparent;font-size:14px;white-space:pre}.hljs{padding:0!important}.option{display:flex;align-items:center;gap:14px;border:1px solid var(--line);border-radius:10px;padding:14px;margin:11px 0;cursor:pointer;transition:background .15s}.option:hover{background:#f7f9f5}.option:has(input:checked){border-color:var(--green);background:#eff6f0}.option:focus-within{outline:2px solid var(--green);outline-offset:2px}.option input{accent-color:var(--green);width:17px;height:17px;flex-shrink:0}.option-letter{display:grid;place-items:center;width:30px;height:30px;background:#f0f2ed;border-radius:6px;font-size:12px;font-weight:700;flex-shrink:0}.option:has(input:checked) .option-letter{background:var(--green);color:white}.option-content{font-size:14px;white-space:pre-wrap;overflow-wrap:anywhere}.question-footer{border-top:1px solid var(--line);margin-top:28px;padding-top:24px;display:flex;align-items:center;justify-content:space-between;gap:10px}.navigation-panel{padding:24px}.progress-bar{background:var(--green)}#numbers{display:grid;grid-template-columns:repeat(5,1fr);gap:9px}.number{border:1px solid var(--line);border-radius:8px;background:white;color:#6b756e;aspect-ratio:1.1;font-size:14px;font-weight:650}.number.answered{background:var(--green);color:#fff;border-color:var(--green)}.number.marked{background:#f5e6be;color:#7d601e;border-color:#ead28e}.number.current{outline:2px solid #243e32;outline-offset:2px}.legend{display:flex;gap:12px;margin-top:20px;flex-wrap:wrap;font-size:10px;color:var(--muted)}.dot{width:8px;height:8px;display:inline-block;border-radius:2px;margin-right:4px}.dot.answered{background:var(--green)}.dot.marked{background:#e8c367}.dot.empty{border:1px solid #aab3a9}.aside-note{padding:18px 12px;font-size:12px;color:var(--muted)}.page-footer{display:flex;justify-content:space-between;gap:20px;border-top:1px solid var(--line);margin-top:65px;padding-top:22px;color:#879187;font-size:11px}.page-footer span:first-child{font-weight:700;letter-spacing:1.5px}.result-wrap{max-width:670px;margin:auto}.result-mark{margin:auto;background:#e9f1e7;color:var(--green);width:65px;height:65px;border-radius:50%;display:grid;place-items:center;font-size:32px}.score{font-size:75px;line-height:1.4;font-weight:750;letter-spacing:-3px}.result-wrap .btn{margin:4px}dialog{border:1px solid var(--line);border-radius:16px;padding:30px;max-width:480px;width:calc(100% - 30px);color:var(--ink)}dialog::backdrop{background:#12261bb3;backdrop-filter:blur(3px)}[hidden]{display:none!important}@media(max-width:767px){.entrance{padding:24px}.intro{padding-top:8px}.brand-sub{display:none}.question-panel{padding:20px}.question-footer{flex-wrap:wrap}#save-state{order:3;width:100%;text-align:center;margin-top:8px}.timer-box{padding:10px 15px;min-width:117px}.timer-box b{font-size:24px}.exam-heading h1{font-size:20px}.question-text{font-size:18px}.page-footer{flex-direction:column;gap:7px;margin-top:40px}.option{padding:11px;gap:10px}}
+
+</style>
+  <script src="assets/highlight.min.js"></script>
+
+</head>
+<body>
+<header class="topbar"><div class="container d-flex align-items-center justify-content-between gap-3"><a class="brand" href="./"><span class="brand-icon">r.</span> ruang ujian<span class="brand-sub">CBT KELAS</span></a><span id="connection" class="small">● Online</span></div></header>
+<main class="container py-4 py-lg-5">
+  <div id="notice" class="alert alert-danger" role="alert" hidden></div>
+  <section id="loading" class="panel p-5 text-center" role="status">Menyiapkan ruang ujian…</section>
+<section id="home" hidden>
+    <div class="row g-5 align-items-center">
+      <div class="col-lg-6 intro"><p class="eyebrow">SELAMAT DATANG DI RUANG UJIAN</p><h1>Satu soal.<br>Satu langkah<br><em>lebih paham.</em></h1><p class="intro-copy">Siapkan diri, baca setiap soal dengan teliti,<br class="d-none d-md-block"> lalu kerjakan dengan kemampuanmu sendiri.</p><div class="d-flex gap-4 mt-4"><div><b id="home-count">—</b><span>soal pilihan ganda</span></div><div class="intro-divider"></div><div><b id="home-duration">—</b><span>menit pengerjaan</span></div></div></div>
+      <div class="col-lg-6"><div class="panel entrance"><p class="eyebrow">IDENTITAS PESERTA</p><h2 id="home-title">Dasar Pemrograman</h2><p id="home-subject" class="text-secondary"></p><label class="form-label fw-semibold mt-3" for="student">Pilih nama kamu</label><select id="student" class="form-select form-select-lg"><option value="">Pilih peserta…</option></select><div class="rules"><b>Sebelum mulai</b><ul><li>Jawaban tersimpan otomatis di browser ini.</li><li>Waktu tetap berjalan meskipun halaman ditutup.</li><li id="finish-rule">Ujian dapat diakhiri pada 10 menit terakhir.</li></ul></div><button id="start" class="btn btn-primary btn-lg w-100">Mulai ujian <span aria-hidden="true">→</span></button><p class="small text-secondary mb-0 mt-3">Pastikan nama sudah benar sebelum memulai.</p></div></div>
+    </div>
+  </section>
+  <section id="exam" hidden>
+    <div class="exam-heading"><div><p class="eyebrow mb-2" id="exam-subject"></p><h1 id="exam-title" class="h3 fw-bold mb-1"></h1><p id="identity" class="text-secondary mb-0"></p></div><div id="timer-box" class="timer-box"><span>SISA WAKTU</span><b id="timer" role="timer" aria-label="Sisa waktu">60:00</b></div></div>
+    <div class="row g-4 mt-1"><div class="col-lg-8"><article class="panel question-panel"><div class="d-flex justify-content-between align-items-center mb-4"><span id="question-label" class="eyebrow mb-0"></span><button id="flag" class="btn btn-sm btn-outline-secondary" aria-pressed="false">Tandai ragu-ragu</button></div><h2 id="question-text" class="question-text" tabindex="-1"></h2><div id="code-wrap" class="code-wrap" hidden><div id="code-language" class="code-label">JAVASCRIPT</div><pre><code id="question-code"></code></pre></div><fieldset id="options"><legend class="visually-hidden">Pilih satu jawaban</legend></fieldset><div class="question-footer"><button id="previous" class="btn btn-outline-secondary">← Sebelumnya</button><span id="save-state" class="small text-secondary" role="status">Tersimpan di perangkat</span><button id="next" class="btn btn-primary">Selanjutnya →</button></div></article></div>
+    <aside class="col-lg-4"><div class="panel navigation-panel"><div class="d-flex justify-content-between"><h2 class="h6 fw-bold">Navigasi soal</h2><span id="progress-text" class="small text-secondary"></span></div><div class="progress my-3" style="height:5px"><div id="progress-bar" class="progress-bar" role="progressbar" aria-label="Jawaban terisi" aria-valuemin="0" aria-valuemax="100"></div></div><nav id="numbers" aria-label="Nomor soal"></nav><div class="legend"><span><i class="dot answered"></i>Terjawab</span><span><i class="dot marked"></i>Ragu-ragu</span><span><i class="dot empty"></i>Belum</span></div><hr><button id="finish" class="btn btn-primary w-100" disabled>Akhiri ujian</button><p id="finish-hint" class="small text-secondary mt-3 mb-0"></p></div><p class="aside-note">Kerjakan soal yang kamu kuasai terlebih dahulu. Kamu bisa kembali ke nomor mana pun.</p></aside></div>
+  </section>
+  <section id="result" class="result-wrap" hidden><div class="panel p-4 p-md-5 text-center"><div class="result-mark">✓</div><p class="eyebrow mt-4">SESI SELESAI</p><h1 class="h2 fw-bold">Terima kasih sudah berusaha.</h1><p id="result-name" class="text-secondary"></p><div id="send-status" class="alert alert-light text-start" role="status"></div><button id="retry" class="btn btn-primary" hidden>Coba kirim lagi</button><button id="download" class="btn btn-outline-secondary">Unduh bukti jawaban</button><button id="another" class="btn btn-link d-block mx-auto mt-3" hidden>Kembali ke pilihan nama</button><p class="small text-secondary mt-4 mb-0">Simpan bukti jawaban sampai guru mengonfirmasi hasil ujian.</p></div></section>
+  <footer class="page-footer"><span>RUANG UJIAN</span><span>Belajar dengan jujur, bertumbuh dengan proses.</span></footer>
+</main>
+<dialog id="finish-dialog"><form method="dialog"><p class="eyebrow">KONFIRMASI</p><h2 class="h4 fw-bold">Yakin menyelesaikan ujian?</h2><p id="confirm-detail"></p><p class="text-secondary">Setelah diakhiri, jawaban tidak dapat diubah.</p><div class="d-flex justify-content-end gap-2 mt-4"><button class="btn btn-outline-secondary" value="cancel">Periksa kembali</button><button class="btn btn-primary" value="finish">Ya, akhiri ujian</button></div></form></dialog>
+
+<script src="config.js"></script>
+<script>
+(function (root) {
+  const core = {
+    remaining(state, now = Date.now()) { return Math.max(0, Math.ceil((state.deadline - now) / 1000)); },
+    canFinish(state, now = Date.now()) { return core.remaining(state, now) <= state.exam.finishWindowMinutes * 60; },
+    count(state) { return state.questions.filter(q => Object.hasOwn(q.options, state.answers[q.id])).length; },
+    grade(questions, answers) {
+      let correct = 0, answered = 0;
+      for (const q of questions) {
+        if (Object.hasOwn(q.options, answers[q.id])) { answered++; if (answers[q.id] === q.answer) correct++; }
+      }
+      return {score: Math.round(correct / questions.length * 10000) / 100, correct, wrong: answered - correct, blank: questions.length - answered, total: questions.length};
+    },
+    time(seconds) { return `${String(Math.floor(seconds / 60)).padStart(2, '0')}:${String(seconds % 60).padStart(2, '0')}`; }
+  };
+  root.CBTCore = core;
+  if (typeof module !== 'undefined') module.exports = core;
+})(typeof window !== 'undefined' ? window : globalThis);
+
+</script>
+<script>
+/* Antarmuka CBT. Semua teks soal dimasukkan melalui textContent. */
+(() => {
+  'use strict';
+  const $ = id => document.getElementById(id), cfg = window.CBT_CONFIG || {}, core = window.CBTCore;
+  const key = `${cfg.storageKey}:live:${cfg.apiUrl}`;
+  let state = null, bank = null, sending = false, storageOK = true, offset = 0;
+  const now = () => Date.now() + offset;
+  const uuid = () => globalThis.crypto?.randomUUID?.() || 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => { const n = Math.random()*16|0; return (c==='x'?n:(n&3|8)).toString(16); });
+  function notice(text) { $('notice').textContent = text; $('notice').hidden = !text; }
+  function page(id) { for (const name of ['loading', 'home', 'exam', 'result']) $(name).hidden = name !== id; }
+  function persist() {
+    try { localStorage.setItem(key, JSON.stringify(state)); storageOK = true; if ($('save-state')) $('save-state').textContent = 'Tersimpan di perangkat'; return true; }
+    catch { storageOK = false; notice('Penyimpanan browser tidak tersedia atau penuh. Jangan tutup halaman ini. Jika ujian selesai, unduh bukti jawaban dan hubungi guru.'); if ($('save-state')) $('save-state').textContent = 'Gagal menyimpan'; return false; }
+  }
+  async function api(action, payload = {}) {
+    if (!/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/.test(cfg.apiUrl)) throw new Error('URL Apps Script belum benar. Isi apiUrl pada config.js dengan URL /exec.');
+    const controller = new AbortController(), timeout = setTimeout(() => controller.abort(), 25000);
+    try {
+      const response = await fetch(cfg.apiUrl, {method:'POST', redirect:'follow', headers:{'Content-Type':'text/plain;charset=utf-8'}, body:JSON.stringify({action, ...payload}), signal:controller.signal});
+      if (!response.ok) throw new Error(`Server merespons HTTP ${response.status}.`);
+      const data = await response.json();
+      if (!data.ok) throw new Error(data.error || 'Permintaan ditolak server.');
+      if (data.serverNow) offset = data.serverNow - Date.now();
+      return data;
+    } catch (e) { if (e.name === 'AbortError') throw new Error('Koneksi melewati batas waktu. Silakan coba lagi.'); throw e; }
+    finally { clearTimeout(timeout); }
+  }
+  function renderHome() {
+    page('home'); $('home-title').textContent = bank.exam.title; $('home-subject').textContent = bank.exam.subject;
+    $('home-count').textContent = bank.questionCount || bank.questions.length; $('home-duration').textContent = bank.exam.durationMinutes;
+    $('finish-rule').textContent = `Ujian dapat diakhiri pada ${bank.exam.finishWindowMinutes} menit terakhir.`;
+    $('student').replaceChildren(new Option('Pilih peserta…', ''));
+    for (const s of bank.students) $('student').add(new Option(`${s.name} — ${s.className} (${s.id})`, s.id));
+    if (state?.status === 'starting') { $('student').value = state.student.id; $('student').disabled = true; $('start').textContent = 'Lanjutkan proses mulai'; notice('Permintaan mulai belum dikonfirmasi. Klik tombol untuk melanjutkan sesi yang sama.'); }
+  }
+  async function start() {
+    const student = bank.students.find(s => s.id === $('student').value);
+    if (!student) { notice('Pilih nama kamu terlebih dahulu.'); $('student').focus(); return; }
+    $('start').disabled = true; notice('');
+    try {
+      if (state?.status !== 'starting') { state = {status:'starting', student, attemptId:uuid()}; if (!persist()) { state=null; return; } }
+      const session = await api('start', {studentId:student.id, examId:bank.exam.id, attemptId:state.attemptId});
+      state = {...state, ...session, status:'active', answers:{}, flags:{}, index:0, mode:'live', offset};
+      
+      delete state.ok; persist(); renderExam(); tick();
+    } catch(e) { notice(`Ujian belum dimulai di halaman ini. ${e.message} Klik Mulai lagi untuk memulihkan permintaan yang sama.`); $('student').disabled = true; }
+    finally { $('start').disabled = false; }
+  }
+  function renderExam(focus = false) {
+    page('exam'); $('exam-title').textContent = state.exam.title; $('exam-subject').textContent = state.exam.subject;
+    $('identity').textContent = `${state.student.name} · ${state.student.className}`;
+    const q = state.questions[state.index];
+    $('question-label').textContent = `SOAL ${String(state.index+1).padStart(2,'0')} / ${state.questions.length}`;
+    $('question-text').textContent = q.text;
+    $('code-wrap').hidden = !q.code;
+    if (q.code) {
+      const language = ['javascript','php','html','css','sql','python','plaintext'].includes(q.language) ? q.language : 'plaintext';
+      $('code-language').textContent = language.toUpperCase(); const el = $('question-code');
+      el.removeAttribute('data-highlighted'); el.className = `language-${language === 'html' ? 'xml' : language}`; el.textContent = q.code;
+      if (window.hljs) window.hljs.highlightElement(el);
+    }
+    $('options').replaceChildren(); const legend = document.createElement('legend'); legend.className='visually-hidden'; legend.textContent='Pilih satu jawaban'; $('options').append(legend);
+    for (const [letter,text] of Object.entries(q.options)) {
+      const label = document.createElement('label'); label.className='option';
+      const radio=document.createElement('input'); radio.type='radio'; radio.name='answer'; radio.value=letter; radio.checked=state.answers[q.id]===letter;
+      const badge=document.createElement('span'); badge.className='option-letter'; badge.textContent=letter;
+      const content=document.createElement('span'); content.className='option-content'; content.textContent=text;
+      radio.addEventListener('change', () => { if (!guardTime()) return; state.answers[q.id]=letter; persist(); renderNavigation(); });
+      label.append(radio,badge,content); $('options').append(label);
+    }
+    $('flag').textContent = state.flags[q.id] ? '✓ Ditandai ragu-ragu' : 'Tandai ragu-ragu'; $('flag').setAttribute('aria-pressed', String(!!state.flags[q.id]));
+    $('previous').disabled=state.index===0; $('next').disabled=state.index===state.questions.length-1;
+    renderNavigation(); if (focus) $('question-text').focus();
+  }
+  function renderNavigation() {
+    const count=core.count(state), percent=Math.round(count/state.questions.length*100);
+    $('progress-text').textContent=`${count}/${state.questions.length} terisi`; $('progress-bar').style.width=`${percent}%`; $('progress-bar').setAttribute('aria-valuenow',percent);
+    $('numbers').replaceChildren();
+    state.questions.forEach((q,i) => { const b=document.createElement('button'); b.className='number';
+      if(state.answers[q.id]) b.classList.add('answered'); if(state.flags[q.id]) b.classList.add('marked'); if(i===state.index) { b.classList.add('current'); b.setAttribute('aria-current','step'); }
+      b.textContent=i+1; b.setAttribute('aria-label',`Soal ${i+1}, ${state.answers[q.id]?'terjawab':'belum dijawab'}${state.flags[q.id]?', ragu-ragu':''}`);
+      b.onclick=()=>navigate(i); $('numbers').append(b);
+    });
+  }
+  function guardTime() { if(state?.status!=='active')return false; if(core.remaining(state,now())===0){finish('timeout');return false;} return true; }
+  function navigate(i) { if(!guardTime())return; state.index=i;persist();renderExam(true); }
+  function tick() {
+    $('connection').textContent = navigator.onLine ? '● Online' : '○ Offline';
+    if(state?.status!=='active')return;
+    const remaining=core.remaining(state,now()); $('timer').textContent=core.time(remaining);
+    const allowed=core.canFinish(state,now()); $('finish').disabled=!allowed; $('timer-box').classList.toggle('urgent',allowed);
+    $('finish-hint').textContent=allowed?'Periksa jawabanmu. Kamu sudah bisa mengakhiri ujian.':`Tombol aktif saat sisa waktu ${state.exam.finishWindowMinutes}:00 atau kurang.`;
+    if(remaining===0)finish('timeout');
+  }
+  function confirmFinish() {
+    if(!guardTime() || !core.canFinish(state,now())) return;
+    const blank=state.questions.length-core.count(state), flagged=Object.values(state.flags).filter(Boolean).length;
+    $('confirm-detail').textContent=`${core.count(state)} soal terjawab, ${blank} belum dijawab, dan ${flagged} ditandai ragu-ragu.`;
+    $('finish-dialog').showModal();
+  }
+  async function finish(reason) {
+    if(state?.status!=='active')return;
+    if(reason==='manual'&&!core.canFinish(state,now()))return;
+    if($('finish-dialog').open)$('finish-dialog').close('timeout');
+    state.status='pending';state.finishedAt=Math.min(now(),state.deadline);state.reason=reason;persist();renderResult();await send();
+  }
+  function renderResult() {
+    page('result'); $('result-name').textContent=`${state.student.name} · ${state.exam.title}`;
+    $('retry').hidden=state.status!=='pending'||sending; $('another').hidden=state.status!=='sent';
+    $('send-status').textContent=state.status==='sent'?`Jawaban ujian berhasil dikirim. ID: ${state.attemptId}`:(sending?'Mengirim jawaban… Tunggu konfirmasi penyimpanan.':'Jawaban sudah dikunci dan menunggu pengiriman. Jangan hapus data browser.');
+    if(!storageOK)$('send-status').textContent+=' Penyimpanan browser gagal; segera unduh bukti jawaban.';
+  }
+  async function send() {
+    if(sending||state?.status!=='pending')return;
+    sending=true;renderResult();
+    try {
+      await api('submit',{attemptId:state.attemptId,token:state.token,answers:state.answers,reason:state.reason,finishedAt:state.finishedAt});
+      state.result={recorded:true};state.status='sent';persist();notice('');
+    }catch(e){notice(`Belum berhasil mengirim: ${e.message} Jawaban tetap tersimpan selama penyimpanan browser tersedia. Klik Coba kirim lagi atau tunggu koneksi pulih.`);}
+    finally{sending=false;renderResult();}
+  }
+  async function init() {
+    if(typeof cfg.apiUrl !== 'string' || !/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/.test(cfg.apiUrl)){
+      page('loading');
+      $('loading').textContent='Aplikasi belum terhubung ke Google Sheets. Isi apiUrl pada config.js dengan URL Web app Apps Script yang berakhiran /exec, simpan, lalu muat ulang halaman.';
+      return;
+    }
+    try{
+      const probe=key+':test';localStorage.setItem(probe,'1');localStorage.removeItem(probe);
+      const raw=localStorage.getItem(key);if(raw)state=JSON.parse(raw);
+      if(state?.result){state.result={recorded:true};persist();}
+      if(state && !['starting','active','pending','sent'].includes(state.status))throw new Error('Data sesi tidak valid. Hubungi guru sebelum menghapus data browser.');
+      offset=state?.offset||0;
+      if(state?.status==='active'){renderExam();tick();if(state.status==='active')api('resume',{attemptId:state.attemptId,token:state.token}).then(data=>{if(state.status!=='active')return;state.offset=offset;state.deadline=data.deadline;if(data.result){state.result={recorded:true};state.status='sent';persist();renderResult();}else{persist();tick();}}).catch(()=>notice('Sesi dipulihkan dari perangkat. Sinkronisasi server belum tersedia; waktu tetap berjalan.'));return;}
+      if(state?.status==='pending'||state?.status==='sent'){renderResult();if(state.status==='pending')send();return;}
+      bank=await api('bootstrap');renderHome();
+    }catch(e){page('loading');$('loading').textContent='Ruang ujian belum dapat dibuka. Periksa pengaturan, lalu muat ulang halaman.';notice(e.message || 'Gagal memuat data. Periksa koneksi internet dan pengaturan browser, lalu buka ulang index.html.');}
+  }
+  $('start').onclick=start; $('previous').onclick=()=>navigate(state.index-1); $('next').onclick=()=>navigate(state.index+1);
+  $('flag').onclick=()=>{if(!guardTime())return;const id=state.questions[state.index].id;state.flags[id]=!state.flags[id];persist();renderExam();};
+  $('finish').onclick=confirmFinish;
+  $('finish-dialog').addEventListener('close',()=>{if($('finish-dialog').returnValue==='finish')finish('manual');});
+  $('retry').onclick=send;
+  $('another').onclick=()=>{if(state.status!=='sent')return;localStorage.removeItem(key);location.reload();};
+  $('download').onclick=()=>{const {token, result, ...copy}=state;const blob=new Blob([JSON.stringify({...copy,exportedAt:new Date().toISOString()},null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`bukti-${state.student.id}-${state.attemptId}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
+  window.addEventListener('online',()=>{tick();if(state?.status==='pending')send();});
+  window.addEventListener('offline',tick);
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden)tick();});
+  // Tab lain mengikuti salinan terakhir; gunakan satu tab agar tidak saling menimpa jawaban.
+  window.addEventListener('storage',e=>{if(e.key===key)location.reload();});
+  setInterval(tick,1000); setInterval(()=>{if(navigator.onLine&&state?.status==='pending')send();},30000);
+  init();
+})();
+
+</script>
+</body></html>
